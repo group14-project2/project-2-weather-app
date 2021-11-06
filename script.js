@@ -1,4 +1,4 @@
-const APIKey = `HK314ea8L7j8SejryLWNTW47QRFBpvwt`;
+const APIKey = `gm7s0qdKp0IsRCbkhFPinoClGBWUxRND`;
 const body = document.querySelector("body");
 const inputLocation = document.querySelector(".inputLocation");
 const submitLocation = document.querySelector(".submitLocation");
@@ -17,7 +17,7 @@ submitLocation.addEventListener("submit", (e) => {
 
 // // get from an api and its location key
 const getLocation = async (location) => {
-  const baseUrl = `https://dataservice.accuweather.com/locations/v1/cities/search?apikey=HK314ea8L7j8SejryLWNTW47QRFBpvwt&q=${location}`;
+  const baseUrl = `https://dataservice.accuweather.com/locations/v1/cities/search?apikey=${APIKey}&q=${location}`;
   const response = await fetch(baseUrl);
   const data = await response.json();
   // filter for appropriate city
@@ -25,7 +25,7 @@ const getLocation = async (location) => {
 };
 // // use location key to find weather for the location
 const getWeather = async (locationKey) => {
-  const baseUrl = `https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/${locationKey}?apikey=HK314ea8L7j8SejryLWNTW47QRFBpvwt`;
+  const baseUrl = `https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/${locationKey}?apikey=${APIKey}`;
   const response = await fetch(baseUrl);
   const data = await response.json();
   console.log(data);
@@ -109,7 +109,14 @@ const renderTimeAndWeather = (availableHour) => {
   console.log(availableHour);
 
   const hour = document.createElement("div");
-  hour.innerHTML = `<p>${new Date(availableHour.DateTime)};</p>
+  hour.innerHTML = `<p> You can run at ${new Date(
+    availableHour.DateTime
+  ).getHours()}:00;</p>
+  <img src="https://developer.accuweather.com/sites/default/files/${
+    availableHour.WeatherIcon <= 9
+      ? "0" + availableHour.WeatherIcon
+      : availableHour.WeatherIcon
+  }-s.png" alt="">
   <p>${availableHour.IconPhrase}</p>
   <p>${(((availableHour.Temperature.Value - 32) * 5) / 9).toFixed(1)}°C</p>`;
 
