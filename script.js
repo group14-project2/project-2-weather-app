@@ -65,13 +65,9 @@ const getWeather = async (locationKey) => {
 
   // condition if you still want to run while raining, sun down, or both
   if (isRaining.checked && isSunDown.checked) {
-    // render div showing available hour slots to run
+    // render div showing available hour slots to run using renderTimeAndWeather()
     hourSlots.forEach((hour) => {
       if (hour.checked) {
-        // matchedValue(hour.value);
-        // console.log(matchedValue(hour.value));
-        // console.log(matchedValue(hour.value));
-
         renderTimeAndWeather(matchedValue(data, hour.value));
       }
     });
@@ -81,43 +77,63 @@ const getWeather = async (locationKey) => {
   // condition if you dont want to run while raining, but okay when sun is down
 
   if (!isRaining.checked && isSunDown.checked) {
+    // filter api data array to match condition
     const notRainingDayOrNight = data.filter((hour) => {
-      console.log(!hour.HasPrecipitation);
-
       return !hour.HasPrecipitation;
     });
 
-    // render div showing available hour slots to run
+    console.log("notRainingDayOrNight", notRainingDayOrNight);
+    // render div showing available hour slots to run using renderTimeAndWeather()
     hourSlots.forEach((hour) => {
       if (hour.checked) {
-        renderTimeAndWeather(matchedValue(notRainingDayOrNight, hour.value));
+        if (matchedValue(notRainingDayOrNight, hour.value)) {
+          renderTimeAndWeather(matchedValue(notRainingDayOrNight, hour.value));
+        }
       }
     });
-    console.log("notRainingDayOrNight", notRainingDayOrNight);
   }
   // condition if you want to run while raining but not when sun is down
   if (isRaining.checked && !isSunDown.checked) {
+    // filter api data array to match condition
     const notNight = data.filter((hour) => {
       console.log(hour.IsDaylight);
 
       return hour.IsDaylight;
     });
-    // render div showing available hour slots to run
+    console.log("notNight:", notNight);
 
+    // render div showing available hour slots to run using renderTimeAndWeather()
     hourSlots.forEach((hour) => {
       if (hour.checked) {
-        renderTimeAndWeather(matchedValue(notNight, hour.value));
+        if (matchedValue(notNight, hour.value)) {
+          renderTimeAndWeather(matchedValue(notNight, hour.value));
+        }
       }
     });
-    console.log("notNight:", notNight);
   }
 
-  // render div showing available hour slots to run
-  hourSlots.forEach((hour) => {
-    if (hour.checked) {
-      renderTimeAndWeather(matchedValue(data, hour.value));
-    }
-  });
+  // condition if you want to run when its not raining and only when the sun is up
+  if (!isRaining.checked && !isSunDown.checked) {
+    // filter api data array to match condition
+    notRainingAndNotNight = data
+      .filter((hour) => {
+        return hour.IsDaylight;
+      })
+      .filter((hour) => {
+        return !hour.HasPrecipitation;
+      });
+
+    console.log("notRainingAndNotNight", notRainingAndNotNight);
+
+    // render div showing available hour slots to run using renderTimeAndWeather()
+    hourSlots.forEach((hour) => {
+      if (hour.checked) {
+        if (matchedValue(notRainingAndNotNight, hour.value)) {
+          renderTimeAndWeather(matchedValue(notRainingAndNotNight, hour.value));
+        }
+      }
+    });
+  }
 };
 
 // render available time to run and weather during
@@ -141,7 +157,7 @@ const renderTimeAndWeather = (clickedHour) => {
 // it also puts a input.value on the ckeckbox that equals the time label
 const formConditions = document.querySelector(".conditions");
 const twelveHoursFromNow = () => {
-  let currentTime = new Date().getHours() + 1;
+  let currentTime = new Date().getHours();
 
   for (let i = 0; i < 12; i++) {
     if (currentTime + i === 24) {
