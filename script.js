@@ -165,6 +165,7 @@ const twelveHoursFromNow = () => {
     extraHour += 1;
   })
 
+  extraHour = 0;
   document.querySelectorAll(".hourSlot").forEach((checkboxInput) => {
     checkboxInput.value = `${currentTime + extraHour}:00`;
     extraHour += 1;
