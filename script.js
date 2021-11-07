@@ -21,6 +21,7 @@ const getLocation = async (location) => {
   const response = await fetch(baseUrl);
   const data = await response.json();
   // filter for appropriate city
+  
   renderCities(data);
 };
 
@@ -29,7 +30,7 @@ const renderCities = (cities) => {
   // makes a list of cities
   cities.forEach((city) => {
     const cityItem = document.createElement("a");
-    cityItem.innerHTML = `<p>${city.LocalizedName}, <span>${city.Country.LocalizedName}</span</p>`;
+    cityItem.innerHTML = `<p>${city.LocalizedName}, ${city.AdministrativeArea.LocalizedName}, <span>${city.Country.LocalizedName}</span</p>`;
     cityItem.id = city.Key;
 
     cityItem.addEventListener("click", () => {
@@ -152,6 +153,13 @@ const renderTimeAndWeather = (clickedHour) => {
   <p>${(((clickedHour.Temperature.Value - 32) * 5) / 9).toFixed(1)}°C</p>`;
   availableHours.appendChild(availableHour);
 };
+
+
+
+
+
+
+
 
 // grabs current date and time and puts the time label on the 'Hours of Availability' checkbox
 // it also puts a input.value on the ckeckbox that equals the time label
