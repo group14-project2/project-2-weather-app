@@ -1,11 +1,11 @@
-const APIKey = `gm7s0qdKp0IsRCbkhFPinoClGBWUxRND`;
+const APIKey = `Yg5Pb3GrHb1awx4HUiPxk38hOagvNs3Y`;
 const body = document.querySelector("body");
 const inputLocation = document.querySelector(".inputLocation");
 const submitLocation = document.querySelector(".submitLocation");
 const availableCities = document.querySelector(".availableCities");
 const listOfCities = document.querySelector(".listOfCities");
-const labelSlots = document.querySelectorAll(".labelSlot");
-const hourSlots = document.querySelectorAll(".hourSlot");
+// const labelSlots = document.querySelectorAll(".labelSlot");
+// const hourSlots = document.querySelectorAll(".hourSlot");
 const isRaining = document.querySelector(".walkRain");
 const isSunDown = document.querySelector(".walkSunDown");
 // whenever you press submit, this gets the location, hours of availability and raining/not raining, sun up/down
@@ -28,7 +28,7 @@ const getLocation = async (location) => {
 const renderCities = (cities) => {
   // makes a list of cities
   cities.forEach((city) => {
-    const cityItem = document.createElement("li");
+    const cityItem = document.createElement("a");
     cityItem.innerHTML = `<p>${city.LocalizedName}, <span>${city.Country.LocalizedName}</span</p>`;
     cityItem.id = city.Key;
 
@@ -158,20 +158,16 @@ const renderTimeAndWeather = (clickedHour) => {
 const formConditions = document.querySelector(".conditions");
 const twelveHoursFromNow = () => {
   let currentTime = new Date().getHours();
+  let extraHour = 0;
+  
+  document.querySelectorAll('.labelSlot').forEach((label)=>{
+    label.textContent = `${currentTime + extraHour}:00`;
+    extraHour += 1;
+  })
 
-  for (let i = 0; i < 12; i++) {
-    if (currentTime + i === 24) {
-      currentTime = 0;
-      labelSlots[i].textContent = `${currentTime}:00`;
-      hourSlots[i].value = currentTime;
-      console.log(currentTime);
-
-      currentTime = currentTime - i;
-    } else {
-      labelSlots[i].textContent = `${currentTime + i}:00`;
-      hourSlots[i].value = currentTime + i;
-      console.log(currentTime + i);
-    }
-  }
+  document.querySelectorAll(".hourSlot").forEach((checkboxInput) => {
+    checkboxInput.value = `${currentTime + extraHour}:00`;
+    extraHour += 1;
+  })
 };
 twelveHoursFromNow();
