@@ -1,0 +1,35 @@
+
+
+
+
+[
+
+[hourObject.daylight,hourObject.isRaining]
+[F,F]
+[F,F]
+[F,F]
+[F,F]
+[F,F]
+[T,F]
+[T,F]
+[T,F]
+[T,F]
+]
+
+.FILTER(userDaylightPreference, userRainPreference => {
+
+
+    if hour[0] === userDaylightPreference {
+
+        if hour[1] === userDaylightPreference{
+
+            hourWeCanShow.append[hour]
+        }
+    }
+
+
+})
+
+
+
+hour = [list of hours that matches both of the user's preference]
