@@ -4,8 +4,8 @@ const inputLocation = document.querySelector(".inputLocation");
 const submitLocation = document.querySelector(".submitLocation");
 const availableCities = document.querySelector(".availableCities");
 const listOfCities = document.querySelector(".listOfCities");
-// const labelSlots = document.querySelectorAll(".labelSlot");
-// const hourSlots = document.querySelectorAll(".hourSlot");
+const labelSlots = document.querySelectorAll(".labelSlot");
+const hourSlots = document.querySelectorAll(".hourSlot");
 const isRaining = document.querySelector(".walkRain");
 const isSunDown = document.querySelector(".walkSunDown");
 // whenever you press submit, this gets the location, hours of availability and raining/not raining, sun up/down
@@ -29,9 +29,10 @@ const getLocation = async (location) => {
 const renderCities = (cities) => {
   // makes a list of cities
   cities.forEach((city) => {
-    const cityItem = document.createElement("a");
-    cityItem.innerHTML = `<p>${city.LocalizedName}, ${city.AdministrativeArea.LocalizedName}, <span>${city.Country.LocalizedName}</span</p>`;
+    const cityItem = document.createElement("li");
+    cityItem.innerHTML = `<p class='clickable'>${city.LocalizedName}, ${city.AdministrativeArea.LocalizedName}, <span>${city.Country.LocalizedName}</span</p>`;
     cityItem.id = city.Key;
+    cityItem.className = '.clickable';
 
     cityItem.addEventListener("click", () => {
       // whenever you click on a city it will trigger getWeather() that gets that weather for the city you clicked
@@ -43,6 +44,203 @@ const renderCities = (cities) => {
     listOfCities.appendChild(cityItem);
   });
 };
+
+// 12 HOUR FORECAST
+const weatherDataArray = [
+  {
+    "DateTime": "2021-11-07T18:00:00-05:00",
+    "EpochDateTime": 1636326000,
+    "WeatherIcon": 36,
+    "IconPhrase": "Intermittent clouds",
+    "HasPrecipitation": false,
+    "IsDaylight": false,
+    "Temperature": {
+      "Value": 52,
+      "Unit": "F",
+      "UnitType": 18
+    },
+    "PrecipitationProbability": 0,
+    "MobileLink": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=1&hbhhour=18&lang=en-us",
+    "Link": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=1&hbhhour=18&lang=en-us"
+  },
+  {
+    "DateTime": "2021-11-07T19:00:00-05:00",
+    "EpochDateTime": 1636329600,
+    "WeatherIcon": 7,
+    "IconPhrase": "Cloudy",
+    "HasPrecipitation": false,
+    "IsDaylight": false,
+    "Temperature": {
+      "Value": 51,
+      "Unit": "F",
+      "UnitType": 18
+    },
+    "PrecipitationProbability": 0,
+    "MobileLink": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=1&hbhhour=19&lang=en-us",
+    "Link": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=1&hbhhour=19&lang=en-us"
+  },
+  {
+    "DateTime": "2021-11-07T20:00:00-05:00",
+    "EpochDateTime": 1636333200,
+    "WeatherIcon": 36,
+    "IconPhrase": "Intermittent clouds",
+    "HasPrecipitation": false,
+    "IsDaylight": false,
+    "Temperature": {
+      "Value": 49,
+      "Unit": "F",
+      "UnitType": 18
+    },
+    "PrecipitationProbability": 0,
+    "MobileLink": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=1&hbhhour=20&lang=en-us",
+    "Link": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=1&hbhhour=20&lang=en-us"
+  },
+  {
+    "DateTime": "2021-11-07T21:00:00-05:00",
+    "EpochDateTime": 1636336800,
+    "WeatherIcon": 35,
+    "IconPhrase": "Partly cloudy",
+    "HasPrecipitation": false,
+    "IsDaylight": false,
+    "Temperature": {
+      "Value": 48,
+      "Unit": "F",
+      "UnitType": 18
+    },
+    "PrecipitationProbability": 0,
+    "MobileLink": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=1&hbhhour=21&lang=en-us",
+    "Link": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=1&hbhhour=21&lang=en-us"
+  },
+  {
+    "DateTime": "2021-11-07T22:00:00-05:00",
+    "EpochDateTime": 1636340400,
+    "WeatherIcon": 33,
+    "IconPhrase": "Clear",
+    "HasPrecipitation": false,
+    "IsDaylight": false,
+    "Temperature": {
+      "Value": 47,
+      "Unit": "F",
+      "UnitType": 18
+    },
+    "PrecipitationProbability": 0,
+    "MobileLink": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=1&hbhhour=22&lang=en-us",
+    "Link": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=1&hbhhour=22&lang=en-us"
+  },
+  {
+    "DateTime": "2021-11-07T23:00:00-05:00",
+    "EpochDateTime": 1636344000,
+    "WeatherIcon": 34,
+    "IconPhrase": "Mostly clear",
+    "HasPrecipitation": false,
+    "IsDaylight": false,
+    "Temperature": {
+      "Value": 46,
+      "Unit": "F",
+      "UnitType": 18
+    },
+    "PrecipitationProbability": 0,
+    "MobileLink": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=1&hbhhour=23&lang=en-us",
+    "Link": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=1&hbhhour=23&lang=en-us"
+  },
+  {
+    "DateTime": "2021-11-08T00:00:00-05:00",
+    "EpochDateTime": 1636347600,
+    "WeatherIcon": 35,
+    "IconPhrase": "Partly cloudy",
+    "HasPrecipitation": false,
+    "IsDaylight": false,
+    "Temperature": {
+      "Value": 45,
+      "Unit": "F",
+      "UnitType": 18
+    },
+    "PrecipitationProbability": 0,
+    "MobileLink": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=2&hbhhour=0&lang=en-us",
+    "Link": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=2&hbhhour=0&lang=en-us"
+  },
+  {
+    "DateTime": "2021-11-08T01:00:00-05:00",
+    "EpochDateTime": 1636351200,
+    "WeatherIcon": 36,
+    "IconPhrase": "Intermittent clouds",
+    "HasPrecipitation": false,
+    "IsDaylight": false,
+    "Temperature": {
+      "Value": 43,
+      "Unit": "F",
+      "UnitType": 18
+    },
+    "PrecipitationProbability": 0,
+    "MobileLink": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=2&hbhhour=1&lang=en-us",
+    "Link": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=2&hbhhour=1&lang=en-us"
+  },
+  {
+    "DateTime": "2021-11-08T02:00:00-05:00",
+    "EpochDateTime": 1636354800,
+    "WeatherIcon": 35,
+    "IconPhrase": "Partly cloudy",
+    "HasPrecipitation": false,
+    "IsDaylight": false,
+    "Temperature": {
+      "Value": 43,
+      "Unit": "F",
+      "UnitType": 18
+    },
+    "PrecipitationProbability": 0,
+    "MobileLink": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=2&hbhhour=2&lang=en-us",
+    "Link": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=2&hbhhour=2&lang=en-us"
+  },
+  {
+    "DateTime": "2021-11-08T03:00:00-05:00",
+    "EpochDateTime": 1636358400,
+    "WeatherIcon": 34,
+    "IconPhrase": "Mostly clear",
+    "HasPrecipitation": false,
+    "IsDaylight": false,
+    "Temperature": {
+      "Value": 42,
+      "Unit": "F",
+      "UnitType": 18
+    },
+    "PrecipitationProbability": 0,
+    "MobileLink": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=2&hbhhour=3&lang=en-us",
+    "Link": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=2&hbhhour=3&lang=en-us"
+  },
+  {
+    "DateTime": "2021-11-08T04:00:00-05:00",
+    "EpochDateTime": 1636362000,
+    "WeatherIcon": 33,
+    "IconPhrase": "Clear",
+    "HasPrecipitation": false,
+    "IsDaylight": false,
+    "Temperature": {
+      "Value": 42,
+      "Unit": "F",
+      "UnitType": 18
+    },
+    "PrecipitationProbability": 0,
+    "MobileLink": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=2&hbhhour=4&lang=en-us",
+    "Link": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=2&hbhhour=4&lang=en-us"
+  },
+  {
+    "DateTime": "2021-11-08T05:00:00-05:00",
+    "EpochDateTime": 1636365600,
+    "WeatherIcon": 33,
+    "IconPhrase": "Clear",
+    "HasPrecipitation": false,
+    "IsDaylight": false,
+    "Temperature": {
+      "Value": 41,
+      "Unit": "F",
+      "UnitType": 18
+    },
+    "PrecipitationProbability": 0,
+    "MobileLink": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=2&hbhhour=5&lang=en-us",
+    "Link": "http://www.accuweather.com/en/ca/toronto/m5h/hourly-weather-forecast/55488?day=2&hbhhour=5&lang=en-us"
+  }
+]
+
 
 // a function that grabs the right element from weather api array based on the matching time chosen for 'Hours of Availability'
 const matchedValue = (arrData, value) => {
