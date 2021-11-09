@@ -11,3 +11,19 @@
 .clickable:focus{
   text-decoration: underline;
 }
+
+li{
+  font-size: 35px;
+}
+
+.button-container{
+  border: 5px solid red;
+  width: 40%;
+  display: inline-block;
+}
+
+
+.rain,
+.night{
+  background-color: red;
+}

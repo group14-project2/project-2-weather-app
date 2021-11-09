@@ -4,10 +4,8 @@ const inputLocation = document.querySelector(".inputLocation");
 const submitLocation = document.querySelector(".submitLocation");
 const availableCities = document.querySelector(".availableCities");
 const listOfCities = document.querySelector(".listOfCities");
-const labelSlots = document.querySelectorAll(".labelSlot");
-const hourSlots = document.querySelectorAll(".hourSlot");
-const isRaining = document.querySelector(".walkRain");
-const isSunDown = document.querySelector(".walkSunDown");
+
+
 // whenever you press submit, this gets the location, hours of availability and raining/not raining, sun up/down
 submitLocation.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -48,72 +46,62 @@ const renderCities = (cities) => {
 
 
 // // use location key to find weather for the location
-const getWeather = async(locationKey) => {
+const getWeather = async (locationKey) => {
   const baseUrl = `https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/${locationKey}?apikey=${APIKey}`;
   const response = await fetch(baseUrl);
   const data = await response.json();
-  console.log(data);
 
   gatherHourlyData(data);
 }
 
-// let hourlyWeatherData = [];
 
+let twelveHourObj = []
 function gatherHourlyData(data) {
 
   let hourlyWeatherData = [];
   data.forEach((hourlyObject) => {
 
-    hourlyWeatherData.push([hourlyObject.DateTime, hourlyObject.HasPrecipitation, hourlyObject.IsDaylight]);
+    hourlyWeatherData.push([getHourFromISOTime(hourlyObject.DateTime), hourlyObject.HasPrecipitation, hourlyObject.IsDaylight]);
+
+    // push to global variable for debugging; REMOVE LATER
+    twelveHourObj.push([getHourFromISOTime(hourlyObject.DateTime), hourlyObject.HasPrecipitation, hourlyObject.IsDaylight]);
   })
 
-  checkHourlyData(hourlyWeatherData);
+
+  // data is in form of time (hour), will rain, is daylight
+  // console.log(hourlyWeatherData);
+  displayHourlyDaya(hourlyWeatherData);
 }
 
+function displayHourlyDaya(hourlyArray) {
 
-function checkHourlyData(data){
+  hourlyArray.forEach((subArray) => {
+    const hourItem = document.createElement("li");
 
-  let filteredHourlyData = data.filter(array => array[1] === false).filter(array => array[2] === true);
+    hourItem.innerText = subArray[0];
 
-  console.log(filteredHourlyData);
-}
-
-
-
-const formConditions = document.querySelector(".conditions");
-const twelveHoursFromNow = () => {
-  let currentTime = new Date().getHours();
-
-  for (let i = 0; i < 12; i++) {
-    if (currentTime + i === 24) {
-      currentTime = 0;
-      labelSlots[i].textContent = `${currentTime}:00`;
-      hourSlots[i].value = currentTime;
-      console.log(currentTime);
-
-      currentTime = currentTime - i;
+    if (subArray[1] === true) {
+      hourItem.classList.add("rain")
+      hourItem.innerText = hourItem.innerText + ' ☔';
     } else {
-      labelSlots[i].textContent = `${currentTime + i}:00`;
-      hourSlots[i].value = currentTime + i;
-      console.log(currentTime + i);
+      hourItem.innerText = hourItem.innerText + ' 🍂';
     }
-  }
-};
-twelveHoursFromNow();
+
+    if (subArray[2] === false) {
+      hourItem.classList.add("night")
+      hourItem.innerText = hourItem.innerText + ' 🌚';
+    } else {
+      hourItem.innerText = hourItem.innerText + ' 🌞';
+    }
+
+    body.appendChild(hourItem);
+  })
+}
 
 
-// render available time to run and weather during
-const availableHours = document.querySelector(".availableHours");
-const renderTimeAndWeather = (clickedHour) => {
-  const availableHour = document.createElement("div");
-  availableHour.innerHTML = `<p> You can run at ${new Date(
-    clickedHour.DateTime
-  ).getHours()}:00</p>
-  <p>${clickedHour.IconPhrase}</p>
-  <img src="https://developer.accuweather.com/sites/default/files/${clickedHour.WeatherIcon <= 9
-      ? "0" + clickedHour.WeatherIcon
-      : clickedHour.WeatherIcon
-    }-s.png" alt="">
-  <p>${(((clickedHour.Temperature.Value - 32) * 5) / 9).toFixed(1)}°C</p>`;
-  availableHours.appendChild(availableHour);
-};
+
+
+
+function getHourFromISOTime(isoTime) {
+  return isoTime.substring(11, 16)
+}
