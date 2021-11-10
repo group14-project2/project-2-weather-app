@@ -6,13 +6,36 @@ const availableCities = document.querySelector(".availableCities");
 const listOfCities = document.querySelector(".listOfCities");
 
 
+
+// Hackey way of getting 12 hours from now
+function getHours() {
+
+  let currentHour = new Date().getHours();
+  const hourBtnsDiv = document.querySelector('.hour-btns');
+
+  for (i = 1; i < 13; i++) {
+
+    let hour = (currentHour + i) % 24;
+    const hourButton = document.createElement("button");
+    hourButton.innerText = `${hour}:00`;
+    hourBtnsDiv.appendChild(hourButton);
+  }
+}
+getHours();
+
+
+
+
 // whenever you press submit, this gets the location, hours of availability and raining/not raining, sun up/down
-submitLocation.addEventListener("submit", (e) => {
-  e.preventDefault();
+submitLocation.addEventListener("click", (e) => {
   // using the function getLocation that get location you typed and gets an api of cities
   getLocation(inputLocation.value);
 });
 
+
+
+// IF REQUEST TWICE NEW REQUEST GOES TO BOTTOM
+// IMPLEMENT FUNCTION TO CLEAR PREVIOUS REQUEST
 // // get location from an api and its location key
 const getLocation = async (location) => {
   const baseUrl = `https://dataservice.accuweather.com/locations/v1/cities/search?apikey=${APIKey}&q=${location}`;
@@ -62,7 +85,7 @@ function gatherHourlyData(data) {
     hourlyWeatherData.push([hourlyObject.HasPrecipitation, hourlyObject.IsDaylight]);
   })
 
-  // displayHourlyData(hourlyWeatherData);
+  displayHourlyData(hourlyWeatherData);
 }
 
 
@@ -119,6 +142,16 @@ let debug12hour = [
 ];
 
 
+const rainBtn = document.querySelector('#rain');
+const nightBtn = document.querySelector('#night');
+
+[rainBtn, nightBtn].forEach((button) => {
+  button.addEventListener("click", () => {
+    changButtonContent(button);
+    addOrRemoveHighlight(button);
+  });
+})
+
 
 function displayHourlyData(hourlyArray) {
 
@@ -135,7 +168,7 @@ function displayHourlyData(hourlyArray) {
     } else {
       hourItem.innerText = '🍂';
     }
-
+    
     if (subArray[1] === false) {
       hourItem.classList.add("night", "night-highlight");
       hourItem.innerText = hourItem.innerText + ' 🌚';
@@ -144,48 +177,14 @@ function displayHourlyData(hourlyArray) {
     }
 
     resultsDiv.appendChild(hourItem);
+
+    addOrRemoveHighlight(rainBtn);
+    addOrRemoveHighlight(nightBtn);
   })
 }
 // change debug12Hour parameter to hourlyArray when done
 // and uncomment displayHourlyData call in getWeather function
-displayHourlyData(debug12hour);
-
-
-// Hackey way of getting 12 hours from now
-function getHours() {
-
-  let currentHour = new Date().getHours();
-  const hourBtnsDiv = document.querySelector('.hour-btns');
-
-  for (i = 1; i < 13; i++) {
-
-    let hour = (currentHour + i) % 24;
-    const hourButton = document.createElement("button");
-
-    hourButton.innerText = `${hour}:00`;
-    hourBtnsDiv.appendChild(hourButton);
-    // hourBtnsDiv.appendChild(document.createElement("br"));
-
-  }
-}
-
-getHours();
-
-
-
-
-
-
-const rainBtn = document.querySelector('#rain');
-const nightBtn = document.querySelector('#night');
-
-[rainBtn, nightBtn].forEach((button) => {
-  button.addEventListener("click", (e) => {
-    changButtonContent(button);
-    addHighlight(button);
-  });
-})
-
+// displayHourlyData(debug12hour);
 
 
 function changButtonContent(btn) {
@@ -200,7 +199,6 @@ function changButtonContent(btn) {
     'night': ["🌞", "🌚", 'to walk at night']
   }
 
-  // dont change button value right here, b/c addHighlight need the value of the button prior to the click
   if (btn.value === 'true') {
     btn.innerText = btnText[btn.id][0] + ' ' + btnLogic['false'] + btnText[btn.id][2];
   } else {
@@ -209,14 +207,9 @@ function changButtonContent(btn) {
 }
 
 
-function addHighlight(button) {
-
-  // WILLING TO WALK === REMOVE HIGHLIGHT
-  // NOT WILLING TO WALK === ADD HIGHLIGHT
+function addOrRemoveHighlight(button) {
 
   let elementWithClass = Array.from(document.getElementsByClassName(button.id));
-
-  // button.value === 'true' ? button.value = 'false' : button.value = 'true';
 
   if (button.value === 'true') {
     elementWithClass.forEach((element) => {
@@ -230,23 +223,4 @@ function addHighlight(button) {
     })
     button.value = 'true';
   }
-
-
-
-
-
-  // console.log(button);
-  console.log(elementWithClass);
-
-  // if (addHighlight === true) {
-
-  //   Array.from(document.getElementsByClassName(classname)).forEach((element) => {
-  //     element.className = `${classname}-highlight`;
-  //   })
-
-  // }else if(addHighlight === false) {
-  //   Array.from(document.getElementsByClassName(classname)).forEach((element) => {
-  //     element.classList.remove(`${classname}-highlight`);
-  //   })
-  // }
 }
