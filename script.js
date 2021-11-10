@@ -62,31 +62,82 @@ function gatherHourlyData(data) {
     hourlyWeatherData.push([hourlyObject.HasPrecipitation, hourlyObject.IsDaylight]);
   })
 
-  displayHourlyDaya(hourlyWeatherData);
+  // displayHourlyData(hourlyWeatherData);
 }
 
 
 
+let debug12hour = [
+  [
+    true,
+    true
+  ],
+  [
+    false,
+    true
+  ],
+  [
+    false,
+    true
+  ],
+  [
+    false,
+    false
+  ],
+  [
+    true,
+    false
+  ],
+  [
+    false,
+    false
+  ],
+  [
+    false,
+    false
+  ],
+  [
+    false,
+    false
+  ],
+  [
+    false,
+    false
+  ],
+  [
+    false,
+    false
+  ],
+  [
+    false,
+    false
+  ],
+  [
+    false,
+    false
+  ]
+];
 
-function displayHourlyDaya(hourlyArray) {
 
 
+function displayHourlyData(hourlyArray) {
+
+  // debug12hour = hourlyArray;
   const resultsDiv = document.querySelector('.results');
 
   hourlyArray.forEach((subArray) => {
 
     const hourItem = document.createElement("li");
 
-
     if (subArray[0] === true) {
-      hourItem.classList.add("rain")
+      hourItem.classList.add("rain", "rain-highlight");
       hourItem.innerText = '☔';
     } else {
       hourItem.innerText = '🍂';
     }
 
     if (subArray[1] === false) {
-      hourItem.classList.add("night")
+      hourItem.classList.add("night", "night-highlight");
       hourItem.innerText = hourItem.innerText + ' 🌚';
     } else {
       hourItem.innerText = hourItem.innerText + ' 🌞';
@@ -95,29 +146,25 @@ function displayHourlyDaya(hourlyArray) {
     resultsDiv.appendChild(hourItem);
   })
 }
+// change debug12Hour parameter to hourlyArray when done
+// and uncomment displayHourlyData call in getWeather function
+displayHourlyData(debug12hour);
 
-
-
-
-// function getHourFromISOTime(isoTime) {
-//   return isoTime.substring(11, 16)
-// }
 
 // Hackey way of getting 12 hours from now
 function getHours() {
 
   let currentHour = new Date().getHours();
-  // let placeholderDate = new Date(`December 25, 1995 ${currentHour}:00:00`).getHours();
   const hourBtnsDiv = document.querySelector('.hour-btns');
 
   for (i = 1; i < 13; i++) {
-    let placeholderDate = new Date(`May 25, 1995 ${currentHour + i}:00:00`).getHours();
 
-    console.log(`${placeholderDate}:00`);
+    let hour = (currentHour + i) % 24;
     const hourButton = document.createElement("button");
-    hourButton.innerText = `${placeholderDate}:00`;
+
+    hourButton.innerText = `${hour}:00`;
     hourBtnsDiv.appendChild(hourButton);
-    hourBtnsDiv.appendChild(document.createElement("br"));
+    // hourBtnsDiv.appendChild(document.createElement("br"));
 
   }
 }
@@ -129,19 +176,19 @@ getHours();
 
 
 
-const rainBtn = document.querySelector('#rain-btn');
-const nightBtn = document.querySelector('#night-btn');
+const rainBtn = document.querySelector('#rain');
+const nightBtn = document.querySelector('#night');
 
 [rainBtn, nightBtn].forEach((button) => {
   button.addEventListener("click", (e) => {
     changButtonContent(button);
+    addHighlight(button);
   });
 })
 
 
 
 function changButtonContent(btn) {
-  // alert('trying to change thigns');
 
   const btnLogic = {
     'true': 'Willing ',
@@ -149,19 +196,57 @@ function changButtonContent(btn) {
   }
 
   const btnText = {
-    'rain-btn': ["🍂" , '☔', 'to walk in rain'],
-    'night-btn': [ "🌞", "🌚", 'to walk at night']
+    'rain': ["🍂", '☔', 'to walk in rain'],
+    'night': ["🌞", "🌚", 'to walk at night']
   }
 
+  // dont change button value right here, b/c addHighlight need the value of the button prior to the click
   if (btn.value === 'true') {
-    btn.value = 'false';
-    // newSentence =  btnText[btn.id][0] + btnLogic['false'] + btnText[btn.id][2];
-    btn.children[0].innerText = btnText[btn.id][0];
-    btn.children[1].innerText = btnLogic['false'] + btnText[btn.id][2];
+    btn.innerText = btnText[btn.id][0] + ' ' + btnLogic['false'] + btnText[btn.id][2];
   } else {
-    btn.value = 'true';
-    // newSentence = btnText[btn.id][1] + btnLogic['true'] + btnText[btn.id][2];
-    btn.children[0].innerText = btnText[btn.id][1];
-    btn.children[1].innerText = btnLogic['true'] + btnText[btn.id][2];
+    btn.innerText = btnText[btn.id][1] + ' ' + btnLogic['true'] + btnText[btn.id][2];
   }
+}
+
+
+function addHighlight(button) {
+
+  // WILLING TO WALK === REMOVE HIGHLIGHT
+  // NOT WILLING TO WALK === ADD HIGHLIGHT
+
+  let elementWithClass = Array.from(document.getElementsByClassName(button.id));
+
+  // button.value === 'true' ? button.value = 'false' : button.value = 'true';
+
+  if (button.value === 'true') {
+    elementWithClass.forEach((element) => {
+      element.classList.add(`${button.id}-highlight`)
+    })
+    button.value = 'false';
+
+  } else {
+    elementWithClass.forEach((element) => {
+      element.classList.remove(`${button.id}-highlight`)
+    })
+    button.value = 'true';
+  }
+
+
+
+
+
+  // console.log(button);
+  console.log(elementWithClass);
+
+  // if (addHighlight === true) {
+
+  //   Array.from(document.getElementsByClassName(classname)).forEach((element) => {
+  //     element.className = `${classname}-highlight`;
+  //   })
+
+  // }else if(addHighlight === false) {
+  //   Array.from(document.getElementsByClassName(classname)).forEach((element) => {
+  //     element.classList.remove(`${classname}-highlight`);
+  //   })
+  // }
 }
