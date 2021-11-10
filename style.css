@@ -13,17 +13,30 @@
 }
 
 li{
-  font-size: 35px;
+  font-size: 25px;
 }
 
 .button-container{
-  border: 5px solid red;
-  width: 40%;
   display: inline-block;
 }
 
+button{
+  font-size: 20px;
+  min-width: 70px;
+}
 
 .rain,
 .night{
   background-color: red;
+}
+
+
+.hour-btns,
+.results{
+  display: inline-block;
+}
+
+body{
+  margin: 0 auto;
+  padding: 0 30%;
 }

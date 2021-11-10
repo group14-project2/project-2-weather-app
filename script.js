@@ -54,54 +54,114 @@ const getWeather = async (locationKey) => {
   gatherHourlyData(data);
 }
 
-
-let twelveHourObj = []
 function gatherHourlyData(data) {
 
   let hourlyWeatherData = [];
   data.forEach((hourlyObject) => {
 
-    hourlyWeatherData.push([getHourFromISOTime(hourlyObject.DateTime), hourlyObject.HasPrecipitation, hourlyObject.IsDaylight]);
-
-    // push to global variable for debugging; REMOVE LATER
-    twelveHourObj.push([getHourFromISOTime(hourlyObject.DateTime), hourlyObject.HasPrecipitation, hourlyObject.IsDaylight]);
+    hourlyWeatherData.push([hourlyObject.HasPrecipitation, hourlyObject.IsDaylight]);
   })
 
-
-  // data is in form of time (hour), will rain, is daylight
-  // console.log(hourlyWeatherData);
   displayHourlyDaya(hourlyWeatherData);
 }
 
+
+
+
 function displayHourlyDaya(hourlyArray) {
 
+
+  const resultsDiv = document.querySelector('.results');
+
   hourlyArray.forEach((subArray) => {
+
     const hourItem = document.createElement("li");
 
-    hourItem.innerText = subArray[0];
 
-    if (subArray[1] === true) {
+    if (subArray[0] === true) {
       hourItem.classList.add("rain")
-      hourItem.innerText = hourItem.innerText + ' ☔';
+      hourItem.innerText = '☔';
     } else {
-      hourItem.innerText = hourItem.innerText + ' 🍂';
+      hourItem.innerText = '🍂';
     }
 
-    if (subArray[2] === false) {
+    if (subArray[1] === false) {
       hourItem.classList.add("night")
       hourItem.innerText = hourItem.innerText + ' 🌚';
     } else {
       hourItem.innerText = hourItem.innerText + ' 🌞';
     }
 
-    body.appendChild(hourItem);
+    resultsDiv.appendChild(hourItem);
   })
 }
 
 
 
 
+// function getHourFromISOTime(isoTime) {
+//   return isoTime.substring(11, 16)
+// }
 
-function getHourFromISOTime(isoTime) {
-  return isoTime.substring(11, 16)
+// Hackey way of getting 12 hours from now
+function getHours() {
+
+  let currentHour = new Date().getHours();
+  // let placeholderDate = new Date(`December 25, 1995 ${currentHour}:00:00`).getHours();
+  const hourBtnsDiv = document.querySelector('.hour-btns');
+
+  for (i = 1; i < 13; i++) {
+    let placeholderDate = new Date(`May 25, 1995 ${currentHour + i}:00:00`).getHours();
+
+    console.log(`${placeholderDate}:00`);
+    const hourButton = document.createElement("button");
+    hourButton.innerText = `${placeholderDate}:00`;
+    hourBtnsDiv.appendChild(hourButton);
+    hourBtnsDiv.appendChild(document.createElement("br"));
+
+  }
+}
+
+getHours();
+
+
+
+
+
+
+const rainBtn = document.querySelector('#rain-btn');
+const nightBtn = document.querySelector('#night-btn');
+
+[rainBtn, nightBtn].forEach((button) => {
+  button.addEventListener("click", (e) => {
+    changButtonContent(button);
+  });
+})
+
+
+
+function changButtonContent(btn) {
+  // alert('trying to change thigns');
+
+  const btnLogic = {
+    'true': 'Willing ',
+    'false': 'Not willing ',
+  }
+
+  const btnText = {
+    'rain-btn': ["🍂" , '☔', 'to walk in rain'],
+    'night-btn': [ "🌞", "🌚", 'to walk at night']
+  }
+
+  if (btn.value === 'true') {
+    btn.value = 'false';
+    // newSentence =  btnText[btn.id][0] + btnLogic['false'] + btnText[btn.id][2];
+    btn.children[0].innerText = btnText[btn.id][0];
+    btn.children[1].innerText = btnLogic['false'] + btnText[btn.id][2];
+  } else {
+    btn.value = 'true';
+    // newSentence = btnText[btn.id][1] + btnLogic['true'] + btnText[btn.id][2];
+    btn.children[0].innerText = btnText[btn.id][1];
+    btn.children[1].innerText = btnLogic['true'] + btnText[btn.id][2];
+  }
 }

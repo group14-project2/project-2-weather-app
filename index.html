@@ -16,18 +16,22 @@
   </header>
 
   <div class="button-container">
-    <button>☔</button>
-    <p>Willing to walk in rain</p>
+    <button id="rain-btn" value="true">
+      <p>☔</p>
+      <p>Willing to walk in rain</p>
+    </button>
   </div>
 
   <div class="button-container">
-    <button>🌚</button>
-    <p>Willing to walk at night</p>
+    <button id="night-btn" value="true">
+      <p>🌚</p>
+      <p>Willing to walk at night</p>
+    </button>
   </div>
 
 
   <form action="submit" class="submitLocation">
-    <fieldset class="conditions">
+    <!-- <fieldset class="conditions">
       <h2>Hours of Availability</h2>
       <input type="checkbox" id="" name="" value="" class="hourSlot" />
       <label for="" class="labelSlot"> </label>
@@ -53,7 +57,7 @@
       <label for="" class="labelSlot"> </label>
       <input type="checkbox" id="" name="" value="" class="hourSlot" />
       <label for="" class="labelSlot"> </label>
-    </fieldset>
+    </fieldset> -->
 
     <fieldset>
       <input type="text" placeholder="location" class="inputLocation" />
@@ -68,6 +72,18 @@
   </div>
   <div class="availableHours"></div>
 
+
+  <div class="hour-btns-results">
+
+    <div class="hour-btns">
+
+    </div>
+
+    <div class="results">
+
+    </div>
+
+  </div>
 
   <script src="./script.js"></script>
 </body>
