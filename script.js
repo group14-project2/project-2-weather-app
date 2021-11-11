@@ -7,7 +7,7 @@ const listOfCities = document.querySelector(".listOfCities");
 
 
 
-// Hackey way of getting 12 hours from now
+// create 12 hour buttons for the next 12 hours
 function getHours() {
 
   let currentHour = new Date().getHours();
@@ -23,52 +23,49 @@ function getHours() {
 }
 getHours();
 
-
-
-
-// whenever you press submit, this gets the location, hours of availability and raining/not raining, sun up/down
-submitLocation.addEventListener("click", (e) => {
-  // using the function getLocation that get location you typed and gets an api of cities
+// clicking submit calls pass user's input to getLocation()
+submitLocation.addEventListener("submit", (e) => {
+  e.preventDefault();
   getLocation(inputLocation.value);
 });
 
 
-
 // IF REQUEST TWICE NEW REQUEST GOES TO BOTTOM
 // IMPLEMENT FUNCTION TO CLEAR PREVIOUS REQUEST
-// // get location from an api and its location key
+// send user's text input to Accuweather's Location API, and pass the returned data to renderCities()
 const getLocation = async (location) => {
   const baseUrl = `https://dataservice.accuweather.com/locations/v1/cities/search?apikey=${APIKey}&q=${location}`;
   const response = await fetch(baseUrl);
   const data = await response.json();
-  // filter for appropriate city
+  
 
   renderCities(data);
+  
 };
 
-// render available cities matching the input
+
+// Accuweather's Location API gives back an array of city objects that matches user input; this function displays the "city name-region-country" of each city object as a <p> for user to click on and get that city's weather forecast; each city <p> is attached with a unique 5-digit id that uniquely identifies a city to Accuweather's Forecast API 
 const renderCities = (cities) => {
-  // makes a list of cities
+
   cities.forEach((city) => {
     const cityItem = document.createElement("li");
-    cityItem.innerHTML = `<p class='clickable'>${city.LocalizedName}, ${city.AdministrativeArea.LocalizedName}, <span>${city.Country.LocalizedName}</span</p>`;
+    cityItem.innerHTML = `<p class='clickable'>${city.LocalizedName}, ${city.AdministrativeArea.LocalizedName}, ${city.Country.LocalizedName}</p>`;
     cityItem.id = city.Key;
-    cityItem.className = '.clickable';
 
+    // attaches each <p> city element with a handler that sends the <p>'s id, a unique 5-digit, to Accuweather's Forecast API; then the div
     cityItem.addEventListener("click", () => {
-      // whenever you click on a city it will trigger getWeather() that gets that weather for the city you clicked
       getWeather(cityItem.id);
-      // removes list of cities from the screen once you choose one
       body.removeChild(availableCities);
     });
 
+    // appends <p> element to a div to show the user
     listOfCities.appendChild(cityItem);
   });
 };
 
 
 
-// // use location key to find weather for the location
+// sends the 5-digit to Accuweather's Forecast API, and get back an array of 12 objects; each object represents hourly forecast from current time to 12 hours into the future  
 const getWeather = async (locationKey) => {
   const baseUrl = `https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/${locationKey}?apikey=${APIKey}`;
   const response = await fetch(baseUrl);
@@ -77,6 +74,8 @@ const getWeather = async (locationKey) => {
   gatherHourlyData(data);
 }
 
+
+// scrape rain and daylight info from each of the 12 weather objects into an array, then add the 12 subarrays into a containing array and pass that to displayHourData()
 function gatherHourlyData(data) {
 
   let hourlyWeatherData = [];
@@ -90,58 +89,9 @@ function gatherHourlyData(data) {
 
 
 
-let debug12hour = [
-  [
-    true,
-    true
-  ],
-  [
-    false,
-    true
-  ],
-  [
-    false,
-    true
-  ],
-  [
-    false,
-    false
-  ],
-  [
-    true,
-    false
-  ],
-  [
-    false,
-    false
-  ],
-  [
-    false,
-    false
-  ],
-  [
-    false,
-    false
-  ],
-  [
-    false,
-    false
-  ],
-  [
-    false,
-    false
-  ],
-  [
-    false,
-    false
-  ],
-  [
-    false,
-    false
-  ]
-];
-
-
+// apply two functions onto the rain and night button
+// first function changes the text content inside the button
+// second function changes the value/id of the button to match the sematic meanings of text inside button, and add/remove .rain-highlight/.night-highlight from the hourly weather data to match user's preference
 const rainBtn = document.querySelector('#rain');
 const nightBtn = document.querySelector('#night');
 
@@ -153,40 +103,47 @@ const nightBtn = document.querySelector('#night');
 })
 
 
-function displayHourlyData(hourlyArray) {
 
-  // debug12hour = hourlyArray;
+// convert the array of boolean weather forecast for the next 12 hours into 12 <li> with the appropriate emojis, and attach the appropriate .rain/.night/or both class to eachtwelveWeatherSubArray <li>
+function displayHourlyData(twelveWeatherSubArray) {
+
+  // twelveWeatherSubArray takes form of 12 boolean subarrays
+  // [[true, false], [true, true], ...]
+
   const resultsDiv = document.querySelector('.results');
 
-  hourlyArray.forEach((subArray) => {
+  twelveWeatherSubArray.forEach((subArray) => {
 
     const hourItem = document.createElement("li");
 
+    // [0] is precipitation data, [1] is daylight data
     if (subArray[0] === true) {
-      hourItem.classList.add("rain", "rain-highlight");
+      hourItem.classList.add("rain");
       hourItem.innerText = '☔';
     } else {
       hourItem.innerText = '🍂';
     }
-    
+
     if (subArray[1] === false) {
-      hourItem.classList.add("night", "night-highlight");
+      hourItem.classList.add("night");
       hourItem.innerText = hourItem.innerText + ' 🌚';
     } else {
       hourItem.innerText = hourItem.innerText + ' 🌞';
     }
 
+    // append the newly created weather <li>
     resultsDiv.appendChild(hourItem);
 
+
+    // NEED EXTENSIVE EXPLANATION HERE
+    debugger
     addOrRemoveHighlight(rainBtn);
     addOrRemoveHighlight(nightBtn);
   })
 }
-// change debug12Hour parameter to hourlyArray when done
-// and uncomment displayHourlyData call in getWeather function
-// displayHourlyData(debug12hour);
 
 
+// construct new text inside the button
 function changButtonContent(btn) {
 
   const btnLogic = {
@@ -199,6 +156,7 @@ function changButtonContent(btn) {
     'night': ["🌞", "🌚", 'to walk at night']
   }
 
+  // if user clicks on button with true value, means that user do not want to walk in rain/not daylight (ie night) conditions; have to change text inside to say 'Not willing ... to walk...; in rain/at night' is based on the button's id
   if (btn.value === 'true') {
     btn.innerText = btnText[btn.id][0] + ' ' + btnLogic['false'] + btnText[btn.id][2];
   } else {
@@ -207,16 +165,22 @@ function changButtonContent(btn) {
 }
 
 
+// unhighlight/highlight elements by adding/removing .rain-highlight to elements with class .rain (ditto with .night-highlight/.night)
+// adding/removing is based on the value of the rainBtn/nightBtn ('true'/'false'), which reflects the user's preference
 function addOrRemoveHighlight(button) {
 
+  // get all elements with .rain/.night class, and turn them into an array to apply/remove highlight from
   let elementWithClass = Array.from(document.getElementsByClassName(button.id));
 
+
+  // if user clicks on button with true value, means that user do not want to walk in rain/not daylight (ie night) conditions; have to highlight elements with .rain/.night; then have to change button's value to semantically match the text inside
   if (button.value === 'true') {
     elementWithClass.forEach((element) => {
       element.classList.add(`${button.id}-highlight`)
     })
     button.value = 'false';
 
+    // same logic as above but vice versa
   } else {
     elementWithClass.forEach((element) => {
       element.classList.remove(`${button.id}-highlight`)
