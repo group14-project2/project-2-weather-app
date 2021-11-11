@@ -83,6 +83,8 @@ function gatherHourlyData(data) {
     hourlyWeatherData.push([hourlyObject.HasPrecipitation, hourlyObject.IsDaylight]);
   })
 
+  // UNCOMMENT TO GET BOOLEAN WEATHER DATA ARRAY
+  // console.log(hourlyWeatherData)
   displayHourlyData(hourlyWeatherData);
 }
 
@@ -96,8 +98,8 @@ const nightBtn = document.querySelector('#night');
 
 [rainBtn, nightBtn].forEach((button) => {
   button.addEventListener("click", () => {
-    changButtonContent(button);
     addOrRemoveHighlight(button);
+    changButtonContent(button);
   });
 })
 
@@ -152,28 +154,6 @@ function displayHourlyData(twelveWeatherSubArray) {
 }
 
 
-// construct new text inside the button
-function changButtonContent(btn) {
-
-  const btnLogic = {
-    'true': 'Willing ',
-    'false': 'Not willing ',
-  }
-
-  const btnText = {
-    'rain': ["🍂", '☔', 'to walk in rain'],
-    'night': ["🌞", "🌚", 'to walk at night']
-  }
-
-  // if user clicks on button with true value, means that user do not want to walk in rain/not daylight (ie night) conditions; have to change text inside to say 'Not willing ... to walk...; in rain/at night' is based on the button's id
-  if (btn.value === 'true') {
-    btn.innerText = btnText[btn.id][0] + ' ' + btnLogic['false'] + btnText[btn.id][2];
-  } else {
-    btn.innerText = btnText[btn.id][1] + ' ' + btnLogic['true'] + btnText[btn.id][2];
-  }
-}
-
-
 // unhighlight/highlight elements by adding/removing .rain-highlight to elements with class .rain (ditto with .night-highlight/.night)
 // adding/removing is based on the value of the rainBtn/nightBtn ('true'/'false'), which reflects the user's preference
 function addOrRemoveHighlight(button) {
@@ -184,6 +164,81 @@ function addOrRemoveHighlight(button) {
   elementWithClass.forEach((element) => {
     element.classList.toggle(`${button.id}-highlight`);
   })
-
-  button.value === 'true' ? button.value = 'false' : button.value = 'true';
 }
+
+
+// construct new text inside the button
+function changButtonContent(btn) {
+
+  const booleanStatement = {
+    'true': 'Willing ',
+    'false': 'Not willing ',
+  }
+
+  const btnText = {
+    'rain': ["🍂", '☔', 'to walk in rain'],
+    'night': ["🌞", "🌚", 'to walk at night']
+  }
+
+  // see if there are any highlighted elements on page; if there are, user has click button, so need to change text inside button
+  let highlightedElementsExist = document.getElementsByClassName(`${btn.id}-highlight`).length > 0;
+
+  if (highlightedElementsExist) {
+    btn.innerText = btnText[btn.id][0] + ' ' + booleanStatement['false'] + btnText[btn.id][2];
+  } else {
+    btn.innerText = btnText[btn.id][1] + ' ' + booleanStatement['true'] + btnText[btn.id][2];
+  }
+}
+
+
+// good for debugging/testing highlights
+sudburyData = [
+  [
+    false,
+    true
+  ],
+  [
+    false,
+    true
+  ],
+  [
+    true,
+    true
+  ],
+  [
+    true,
+    false
+  ],
+  [
+    false,
+    false
+  ],
+  [
+    true,
+    false
+  ],
+  [
+    true,
+    false
+  ],
+  [
+    true,
+    false
+  ],
+  [
+    true,
+    false
+  ],
+  [
+    true,
+    false
+  ],
+  [
+    true,
+    false
+  ],
+  [
+    true,
+    false
+  ]
+];
