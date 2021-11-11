@@ -37,10 +37,9 @@ const getLocation = async (location) => {
   const baseUrl = `https://dataservice.accuweather.com/locations/v1/cities/search?apikey=${APIKey}&q=${location}`;
   const response = await fetch(baseUrl);
   const data = await response.json();
-  
+
 
   renderCities(data);
-  
 };
 
 
@@ -91,7 +90,7 @@ function gatherHourlyData(data) {
 
 // apply two functions onto the rain and night button
 // first function changes the text content inside the button
-// second function changes the value/id of the button to match the sematic meanings of text inside button, and add/remove .rain-highlight/.night-highlight from the hourly weather data to match user's preference
+// second function and add/remove .rain-highlight/.night-highlight from the hourly weather data to match user's preference, and changes the value/id of the button to match the sematic meanings of text inside button for program logic
 const rainBtn = document.querySelector('#rain');
 const nightBtn = document.querySelector('#night');
 
@@ -136,10 +135,18 @@ function displayHourlyData(twelveWeatherSubArray) {
 
 
     // NEED EXTENSIVE EXPLANATION HERE
-    debugger
-    addOrRemoveHighlight(rainBtn);
+    // IF YOU CAN EXPLAIN WHY THIS WORK THREE DRINKS ON ME
+    // since we have 12 hour elements, we call this function 12 times for each button; an even number of calls basically cancels out any wonky effect with an odd number of calls
+    // to see wonky effect, go to getHourlyWeatherData and sub in the below, which will give 13 weather subarrays, and each line will call 13 times/an odd number of calls
+    //  let hourlyWeatherData = [[false, true]];
+
     addOrRemoveHighlight(nightBtn);
+    addOrRemoveHighlight(rainBtn);
   })
+
+  // [rainBtn, nightBtn].forEach((btn) => {
+  //   console.log(btn.value);
+  // })
 }
 
 
