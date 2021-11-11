@@ -140,9 +140,11 @@ function displayHourlyData(twelveWeatherSubArray) {
     // to see wonky effect, go to getHourlyWeatherData and sub in the below, which will give 13 weather subarrays, and each line will call 13 times/an odd number of calls
     //  let hourlyWeatherData = [[false, true]];
 
-    addOrRemoveHighlight(nightBtn);
-    addOrRemoveHighlight(rainBtn);
+    // addOrRemoveHighlight(nightBtn);
+    // addOrRemoveHighlight(rainBtn);
   })
+
+  
 
   // [rainBtn, nightBtn].forEach((btn) => {
   //   console.log(btn.value);
@@ -179,19 +181,9 @@ function addOrRemoveHighlight(button) {
   // get all elements with .rain/.night class, and turn them into an array to apply/remove highlight from
   let elementWithClass = Array.from(document.getElementsByClassName(button.id));
 
+  elementWithClass.forEach((element) => {
+    element.classList.toggle(`${button.id}-highlight`);
+  })
 
-  // if user clicks on button with true value, means that user do not want to walk in rain/not daylight (ie night) conditions; have to highlight elements with .rain/.night; then have to change button's value to semantically match the text inside
-  if (button.value === 'true') {
-    elementWithClass.forEach((element) => {
-      element.classList.add(`${button.id}-highlight`)
-    })
-    button.value = 'false';
-
-    // same logic as above but vice versa
-  } else {
-    elementWithClass.forEach((element) => {
-      element.classList.remove(`${button.id}-highlight`)
-    })
-    button.value = 'true';
-  }
+  button.value === 'true' ? button.value = 'false' : button.value = 'true';
 }
