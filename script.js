@@ -54,7 +54,14 @@ const renderCities = (cities) => {
     // attaches each <p> city element with a handler that sends the <p>'s id, a unique 5-digit, to Accuweather's Forecast API; then the div
     cityItem.addEventListener("click", () => {
       getWeather(cityItem.id);
-      body.removeChild(availableCities);
+
+      // ===========NEW QOL IMPROV====================
+      // remove lsit cities once user selects
+      listOfCities.innerHTML = '';
+
+      // clear previous 12 weather results
+      document.querySelector('.results').innerHTML = '';
+      // ===========NEW QOL IMPROV====================
     });
 
     // appends <p> element to a div to show the user
@@ -73,122 +80,6 @@ const getWeather = async (locationKey) => {
   gatherHourlyData(data);
 }
 
-
-// scrape rain and daylight info from each of the 12 weather objects into an array, then add the 12 subarrays into a containing array and pass that to displayHourData()
-function gatherHourlyData(data) {
-
-  let hourlyWeatherData = [];
-  data.forEach((hourlyObject) => {
-
-    hourlyWeatherData.push([hourlyObject.HasPrecipitation, hourlyObject.IsDaylight]);
-  })
-
-  // UNCOMMENT TO GET BOOLEAN WEATHER DATA ARRAY
-  // console.log(hourlyWeatherData)
-  displayHourlyData(hourlyWeatherData);
-}
-
-
-
-// apply two functions onto the rain and night button
-// first function changes the text content inside the button
-// second function and add/remove .rain-highlight/.night-highlight from the hourly weather data to match user's preference, and changes the value/id of the button to match the sematic meanings of text inside button for program logic
-const rainBtn = document.querySelector('#rain');
-const nightBtn = document.querySelector('#night');
-
-[rainBtn, nightBtn].forEach((button) => {
-  button.addEventListener("click", () => {
-    addOrRemoveHighlight(button);
-    changButtonContent(button);
-  });
-})
-
-
-
-// convert the array of boolean weather forecast for the next 12 hours into 12 <li> with the appropriate emojis, and attach the appropriate .rain/.night/or both class to eachtwelveWeatherSubArray <li>
-function displayHourlyData(twelveWeatherSubArray) {
-
-  // twelveWeatherSubArray takes form of 12 boolean subarrays
-  // [[true, false], [true, true], ...]
-
-  const resultsDiv = document.querySelector('.results');
-
-  twelveWeatherSubArray.forEach((subArray) => {
-
-    const hourItem = document.createElement("li");
-
-    // [0] is precipitation data, [1] is daylight data
-    if (subArray[0] === true) {
-      hourItem.classList.add("rain");
-      hourItem.innerText = '☔';
-    } else {
-      hourItem.innerText = '🍂';
-    }
-
-    if (subArray[1] === false) {
-      hourItem.classList.add("night");
-      hourItem.innerText = hourItem.innerText + ' 🌚';
-    } else {
-      hourItem.innerText = hourItem.innerText + ' 🌞';
-    }
-
-    // append the newly created weather <li>
-    resultsDiv.appendChild(hourItem);
-
-
-    // NEED EXTENSIVE EXPLANATION HERE
-    // IF YOU CAN EXPLAIN WHY THIS WORK THREE DRINKS ON ME
-    // since we have 12 hour elements, we call this function 12 times for each button; an even number of calls basically cancels out any wonky effect with an odd number of calls
-    // to see wonky effect, go to getHourlyWeatherData and sub in the below, which will give 13 weather subarrays, and each line will call 13 times/an odd number of calls
-    //  let hourlyWeatherData = [[false, true]];
-
-    // addOrRemoveHighlight(nightBtn);
-    // addOrRemoveHighlight(rainBtn);
-  })
-
-  
-
-  // [rainBtn, nightBtn].forEach((btn) => {
-  //   console.log(btn.value);
-  // })
-}
-
-
-// unhighlight/highlight elements by adding/removing .rain-highlight to elements with class .rain (ditto with .night-highlight/.night)
-// adding/removing is based on the value of the rainBtn/nightBtn ('true'/'false'), which reflects the user's preference
-function addOrRemoveHighlight(button) {
-
-  // get all elements with .rain/.night class, and turn them into an array to apply/remove highlight from
-  let elementWithClass = Array.from(document.getElementsByClassName(button.id));
-
-  elementWithClass.forEach((element) => {
-    element.classList.toggle(`${button.id}-highlight`);
-  })
-}
-
-
-// construct new text inside the button
-function changButtonContent(btn) {
-
-  const booleanStatement = {
-    'true': 'Willing ',
-    'false': 'Not willing ',
-  }
-
-  const btnText = {
-    'rain': ["🍂", '☔', 'to walk in rain'],
-    'night': ["🌞", "🌚", 'to walk at night']
-  }
-
-  // see if there are any highlighted elements on page; if there are, user has click button, so need to change text inside button
-  let highlightedElementsExist = document.getElementsByClassName(`${btn.id}-highlight`).length > 0;
-
-  if (highlightedElementsExist) {
-    btn.innerText = btnText[btn.id][0] + ' ' + booleanStatement['false'] + btnText[btn.id][2];
-  } else {
-    btn.innerText = btnText[btn.id][1] + ' ' + booleanStatement['true'] + btnText[btn.id][2];
-  }
-}
 
 
 // good for debugging/testing highlights
@@ -242,3 +133,110 @@ sudburyData = [
     false
   ]
 ];
+
+
+// scrape rain and daylight info from each of the 12 weather objects into an array, then add the 12 subarrays into a containing array and pass that to displayHourData()
+function gatherHourlyData(data) {
+
+  let hourlyWeatherData = [];
+  data.forEach((hourlyObject) => {
+
+    hourlyWeatherData.push([hourlyObject.HasPrecipitation, hourlyObject.IsDaylight]);
+  })
+
+  // UNCOMMENT TO GET BOOLEAN WEATHER DATA ARRAY
+  // console.log(hourlyWeatherData)
+  // displayHourlyData(hourlyWeatherData);
+  displayHourlyData(sudburyData);
+}
+
+
+
+// apply two functions onto the rain and night button
+// first function changes the text content inside the button
+// second function and add/remove .rain-highlight/.night-highlight from the hourly weather data to match user's preference, and changes the value/id of the button to match the sematic meanings of text inside button for program logic
+const rainBtn = document.querySelector('#rain');
+const nightBtn = document.querySelector('#night');
+
+[rainBtn, nightBtn].forEach((button) => {
+  button.addEventListener("click", () => {
+    addOrRemoveHighlight(button);
+    changButtonContent(button);
+  });
+})
+
+
+
+// convert the array of boolean weather forecast for the next 12 hours into 12 <li> with the appropriate emojis, and attach the appropriate .rain/.night/or both class to eachtwelveWeatherSubArray <li>
+function displayHourlyData(twelveWeatherSubArray) {
+
+  // twelveWeatherSubArray takes form of 12 boolean subarrays
+  // [[true, false], [true, true], ...]
+
+  const resultsDiv = document.querySelector('.results');
+
+  twelveWeatherSubArray.forEach((subArray) => {
+
+    const hourItem = document.createElement("li");
+
+    // [0] is precipitation data, [1] is daylight data
+    if (subArray[0] === true) {
+      hourItem.classList.add("rain");
+      hourItem.innerText = '☔';
+    } else {
+      hourItem.innerText = '🍂';
+    }
+
+    if (subArray[1] === false) {
+      hourItem.classList.add("night");
+      hourItem.innerText = hourItem.innerText + ' 🌚';
+    } else {
+      hourItem.innerText = hourItem.innerText + ' 🌞';
+    }
+
+    // append the newly created weather <li>
+    resultsDiv.appendChild(hourItem);
+  })
+
+  // once all hourly data is displayed, check if either buttons text content have changed/ie buttons were clicked from the default 'will walk in rain/at night', and highlight appropriate data
+  if (rainBtn.innerText === "🍂 Not willing to walk in rain") {
+    addOrRemoveHighlight(rainBtn)
+  }
+  if (nightBtn.innerText === "🌞 Not willing to walk at night") {
+    addOrRemoveHighlight(nightBtn)
+  }
+}
+
+
+// unhighlight/highlight elements by adding/removing .rain-highlight to elements with class .rain (ditto with .night-highlight/.night)
+// adding/removing is based on the value of the rainBtn/nightBtn ('true'/'false'), which reflects the user's preference
+function addOrRemoveHighlight(button) {
+
+  // ${buttin.id} is either string of "rain" or "night"
+  // get all elements with .rain/.night class, and turn them into an array to apply/remove the class rain-/night-highlight from
+  let elementWithClass = Array.from(document.getElementsByClassName(button.id));
+
+  elementWithClass.forEach((element) => {
+    element.classList.toggle(`${button.id}-highlight`);
+  })
+}
+
+
+// construct new text inside the button
+function changButtonContent(btn) {
+
+  const a = "☔ Willing to walk in rain";
+  const b = "🍂 Not willing to walk in rain";
+  const c = "🌚 Willing to walk at night";
+  const d = "🌞 Not willing to walk at night";
+
+  // basically swap strings for the opposite related one 
+  // sub in the string to clear up semantic meanings
+  if (btn.id === 'rain') {
+    btn.innerText === a ? btn.innerText = b : btn.innerText = a;
+  } else {
+    btn.innerText === c ? btn.innerText = d : btn.innerText = c;
+  }
+}
+
+
