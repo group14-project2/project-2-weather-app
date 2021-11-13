@@ -11,48 +11,49 @@
 </head>
 
 <body>
-  <header>
-    <div class="app">
-    <h1>Take a walk</h1>
-  </header>
+  <div class="wrapper">
+      <div class="app">
+        <header>
+          <h1>Take a walk</h1>
+        </header>
+        <div class="buttons">
+          <div class="button-container">
+            <button id="rain" value="true">
+              ☔ Willing to walk in rain
+            </button>
+          </div>
 
-  <div class="button-container">
-    <button id="rain" value="true">
-      ☔ Willing to walk in rain
-    </button>
+          <div class="button-container">
+            <button id="night" value="true">
+              🌚 Willing to walk at night
+            </button>
+          </div>
+        </div>
+
+        <form action="submit" class="submitLocation">
+          <fieldset>
+            <input type="text" placeholder="location" class="inputLocation" />
+            <button type="submit">Search</button>
+          </fieldset>
+        </form>
+
+
+        <div class="availableCities">
+          <ul class="listOfCities"></ul>
+        </div>
+        <div class="availableHours"></div>
+
+
+        <div class="hour-btns-results">
+          <div class="hour-btns">
+            <!-- HOUR BUTTONS GO HERE -->
+          </div>
+          <div class="results">
+          <!-- HOURLY WEATHER DATA GO HERE -->
+          </div>
+        </div>
+      </div>
   </div>
-
-  <div class="button-container">
-    <button id="night" value="true">
-      🌚 Willing to walk at night
-    </button>
-  </div>
-
-
-  <form action="submit" class="submitLocation">
-    <fieldset>
-      <input type="text" placeholder="location" class="inputLocation" />
-      <button type="submit">Search</button>
-    </fieldset>
-  </form>
-
-
-  <div class="availableCities">
-    <ul class="listOfCities"></ul>
-  </div>
-  <div class="availableHours"></div>
-
-
-  <div class="hour-btns-results">
-    <div class="hour-btns">
-      <!-- HOUR BUTTONS GO HERE -->
-    </div>
-    <div class="results">
-      <!-- HOURLY WEATHER DATA GO HERE -->
-    </div>
-  </div>
-</div>
-  <script src="./script.js"></script>
+<script src="./script.js"></script>
 </body>
-
 </html>

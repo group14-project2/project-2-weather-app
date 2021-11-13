@@ -1,3 +1,7 @@
+* {
+  border: 1px solid red;
+}
+
 html {
   line-height: 1.15;
   -ms-text-size-adjust: 100%;
@@ -233,7 +237,7 @@ template {
 body {
   margin: 0 auto;
   padding: 0 20%;
-  background-color: #2b2828;
+  background-color: #fff;
   border: 1px solid red;
 }
 
@@ -300,4 +304,29 @@ p {
   display: -ms-flexbox;
   display: flex;
 }
+
+.wrapper {
+  width: 1170px;
+  margin: 0 auto;
+  height: 100vh;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: lightpink;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-content: space-evenly;
+    height: 100px;
+  }
+}
+
 /*# sourceMappingURL=styles.css.map */
