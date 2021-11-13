@@ -21,8 +21,16 @@ body{
 }
 
 
-.clickable{
+.listOfCities{
+  list-style-type: none;
+}
+
+.listOfCities li{
   cursor: pointer;
+}
+
+.no-city{
+  color: white;
 }
 
 .clickable:hover,
