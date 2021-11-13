@@ -21,11 +21,11 @@ body{
 }
 
 
-.listOfCities{
+.list-of-cities{
   list-style-type: none;
 }
 
-.listOfCities li{
+.list-of-cities li{
   cursor: pointer;
 }
 

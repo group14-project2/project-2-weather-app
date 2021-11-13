@@ -1,4 +1,4 @@
-const APIKey = `Yg5Pb3GrHb1awx4HUiPxk38hOagvNs3Y`;
+const APIKey = `HK314ea8L7j8SejryLWNTW47QRFBpvwt`;
 const body = document.querySelector("body");
 const inputLocation = document.querySelector(".input-location");
 const submitLocation = document.querySelector(".submit-location");
@@ -53,7 +53,10 @@ const renderCities = (cities) => {
 
   cities.forEach((city) => {
     const cityItem = document.createElement("li");
-    cityItem.innerHTML = `<p id="${city.key}">${city.LocalizedName}, ${city.AdministrativeArea.LocalizedName}, ${city.Country.LocalizedName}</p>`;
+    cityItem.innerText = `${city.LocalizedName}, ${city.AdministrativeArea.LocalizedName}, ${city.Country.LocalizedName}`;
+    cityItem.id = city.Key;
+
+    console.log(cityItem.id)
 
     // attaches each <p> city element with a handler that sends the <p>'s id, a unique 5-digit, to Accuweather's Forecast API; then the div
     cityItem.addEventListener("click", () => {
@@ -122,7 +125,7 @@ function displayHourlyData(twelveWeatherSubArray) {
 
   const resultsDiv = document.querySelector('.results');
 
-  // turn [true, true] (will rain, nighttime) into [☔, 🌚]
+  // turn subarrays, eg [true, true] (will rain, nighttime) into [☔, 🌚]
   twelveWeatherSubArray.forEach((subArray) => {
 
     const hourItem = document.createElement("li");
