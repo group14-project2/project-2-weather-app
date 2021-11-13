@@ -1,0 +1,66 @@
+@import 'normalize';
+
+body{
+  margin: 0 auto;
+  padding: 0 20%;
+  background-color: rgb(43, 40, 40);
+  border: 1px solid red;
+}
+
+.displayNone {
+  display: none !important;
+}
+
+
+.clickable{
+  cursor: pointer;
+}
+
+.clickable:hover,
+.clickable:focus{
+  text-decoration: underline;
+}
+
+li{
+  font-size: 25px;
+  list-style-type: none;
+  border: 1px black solid;
+}
+
+.button-container{
+  display: inline-block;
+}
+
+button{
+  font-size: 20px;
+  min-width: 70px;
+}
+
+button:not(#rain, #night, [type='submit']){
+  background-color: darkgreen;
+  max-width: 70px;
+}
+
+.rain-highlight,
+.night-highlight{
+  background-color: red;
+}
+
+p{
+  margin: 5px 0;
+}
+
+.hour-btns,
+.results{
+  display: flex;
+  flex-direction: column;
+}
+
+.hour-btns > *,
+.results > * {
+  min-height: 50px;
+}
+
+.hour-btns-results{
+  display: flex;
+}

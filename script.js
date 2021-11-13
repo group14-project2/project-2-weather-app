@@ -45,25 +45,24 @@ const getLocation = async (location) => {
 
 
 // Accuweather's Location API gives back an array of city objects that matches user input; this function displays the "city name-region-country" of each city object as a <p> for user to click on and get that city's weather forecast; each city <p> is attached with a unique 5-digit id that uniquely identifies a city to Accuweather's Forecast API 
+//replace children with an empty so that results aren't re-listed when user clicks submit
 const renderCities = (cities) => {
-
+  listOfCities.replaceChildren();
   cities.forEach((city) => {
     const cityItem = document.createElement("li");
     cityItem.innerHTML = `<p class='clickable'>${city.LocalizedName}, ${city.AdministrativeArea.LocalizedName}, ${city.Country.LocalizedName}</p>`;
     cityItem.id = city.Key;
 
     // attaches each <p> city element with a handler that sends the <p>'s id, a unique 5-digit, to Accuweather's Forecast API; then the div
+    
     cityItem.addEventListener("click", () => {
       getWeather(cityItem.id);
       body.removeChild(availableCities);
     });
-
     // appends <p> element to a div to show the user
     listOfCities.appendChild(cityItem);
   });
 };
-
-
 
 // sends the 5-digit to Accuweather's Forecast API, and get back an array of 12 objects; each object represents hourly forecast from current time to 12 hours into the future  
 const getWeather = async (locationKey) => {
