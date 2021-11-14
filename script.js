@@ -51,10 +51,11 @@ const getLocation = async (location) => {
 // Accuweather's Location API gives back an array of city objects that matches user input; this function displays the "city name-region-country" of each city object as a <p> for user to click on and get that city's weather forecast; each city <p> is attached with a unique 5-digit id that uniquely identifies a city to Accuweather's Forecast API 
 const renderCities = (cities) => {
   listOfCities.replaceChildren();
-  cities.forEach((city) => {
+  cities.forEach((city, index) => {
     const cityItem = document.createElement("li");
     cityItem.innerText = `${city.LocalizedName}, ${city.AdministrativeArea.LocalizedName}, ${city.Country.LocalizedName}`;
     cityItem.id = city.Key;
+    cityItem.tabIndex = index + 5;
 
     console.log(cityItem.id)
 
@@ -115,7 +116,9 @@ const nightBtn = document.querySelector('#night');
   });
 })
 
-
+document.querySelectorAll('[tabindex]').forEach((element) => {
+  console.log(element);
+})
 
 // convert the array of boolean weather forecast for the next 12 hours into 12 <li> with the appropriate emojis, and attach the appropriate .rain/.night/or both class to each <li>
 function displayHourlyData(twelveWeatherSubArray) {

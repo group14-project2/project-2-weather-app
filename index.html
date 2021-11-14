@@ -15,17 +15,18 @@
     <div class="app">
       <header>
         <h1>Take a walk</h1>
+        <p>Ever wanted to take a walk but procrastinated until it's either dark or rainy, or both? Now you can still procrastinated, while also visualize how many precious little sunny and dry moments you wasted not walking. Hopefully that will motivate you into going out every sun/dry moment can for a walk.</p>
         <h2>Select your preference below</h2>
       </header>
 
     <div class="button-container">
-      <button id="rain">
+      <button id="rain" tabindex="1">
         ☔ Willing to walk in rain
       </button>
     </div>
 
     <div class="button-container">
-      <button id="night">
+      <button id="night" tabindex="2">
         🌚 Willing to walk at night
       </button>
     </div>
@@ -33,8 +34,8 @@
 
     <form action="submit" class="submit-location">
       <fieldset>
-        <input type="text" placeholder="location" class="input-location" />
-        <button type="submit">Search</button>
+        <input type="text" placeholder="location" class="input-location" tabindex="3"/>
+        <button type="submit" tabindex="4">Search</button>
         <p class='no-city'></p>
       </fieldset>
     </form>
