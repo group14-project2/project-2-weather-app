@@ -16,9 +16,18 @@ article, aside, footer, header, nav, section {
   display: block;
 }
 
+header {
+  text-align: center;
+}
+
 h1 {
   font-size: 2em;
   margin: .67em 0;
+  text-transform: uppercase;
+}
+
+h2 {
+  text-transform: uppercase;
 }
 
 figcaption, figure, main {
@@ -324,9 +333,22 @@ p {
 .buttons {
     display: flex;
     flex-direction: row;
-    align-content: space-evenly;
-    height: 100px;
+    justify-content: space-between;
+    align-content: center;
+    height: 200px;
+    width: 500px;
   }
-}
 
+  .button-container {
+    height: 50%;
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+    align-self: center;
+  }
+
+  #rain #night {
+    width: 80%;
+    height: 100%;
+  }
 /*# sourceMappingURL=styles.css.map */
