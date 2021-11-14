@@ -1,46 +1,13 @@
 
 
+since there are 12 hour buttons and 12 weather forecast, can use the index of the clicked button to link it to the appropriate hourly weather forecast and toggle class busy-highlight
 
+get 
 
-[
+attach click event listener to all 12 hour buttons
 
-[hourObject.daylight,hourObject.isRaining]
-[F,F]
-[F,F]
-[F,F]
-[F,F]
-[F,F]
-[T,F]
-[T,F]
-[T,F]
-[T,F]
-]
+upon click, function toggles class busy-highlight on appropriate hour element
 
-.FILTER(userDaylightPreference, userRainPreference => {
-
-
-    if hour[0] === userDaylightPreference {
-
-        if hour[1] === userDaylightPreference{
-
-            hourWeCanShow.append[hour]
-        }
-    }
-
-
-})
-
-
-
-hour = [list of hours that matches both of the user's preference]
-
-
-kristin
-learn from each other's strengths
-linda
-excited about debugging/see thigns from diff POV
-yuhui
-shared responsibility
-read other code
-practicing git collaboration
+example
+https://www.w3schools.com/howto/howto_js_toggle_class.asp
 

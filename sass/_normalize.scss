@@ -5,3 +5,82 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
 .clearfix:after {visibility: hidden; display: block; font-size: 0; content: ''; clear: both; height: 0; }
 
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; white-space: nowrap; clip-path: inset(100%); clip: rect(0 0 0 0); overflow: hidden;}
+<<<<<<< HEAD:sass/_normalize.scss
+=======
+
+
+
+
+
+body{
+  margin: 0 auto;
+  padding: 0 20%;
+  background-color: rgb(43, 40, 40);
+}
+
+.displayNone {
+  display: none !important;
+}
+
+
+.list-of-cities{
+  list-style-type: none;
+}
+
+.list-of-cities li{
+  cursor: pointer;
+}
+
+.no-city{
+  color: white;
+}
+
+.clickable:hover,
+.clickable:focus{
+  text-decoration: underline;
+}
+
+li{
+  font-size: 25px;
+  list-style-type: none;
+  border: 1px black solid;
+}
+
+.button-container{
+  display: inline-block;
+}
+
+button{
+  font-size: 20px;
+  min-width: 70px;
+}
+
+button:not(#rain, #night, [type='submit']){
+  background-color: darkgreen;
+  max-width: 70px;
+}
+
+.rain-highlight,
+.night-highlight{
+  background-color: red;
+}
+
+p{
+  margin: 5px 0;
+}
+
+.hour-btns,
+.results{
+  display: flex;
+  flex-direction: column;
+}
+
+.hour-btns > *,
+.results > * {
+  min-height: 50px;
+}
+
+.hour-btns-results{
+  display: flex;
+}
+>>>>>>> main:style.css
