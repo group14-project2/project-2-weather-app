@@ -1,0 +1,32 @@
+//Elements contain styles that only apply to HTML tags, for the most part: typography, form elements, etc.
+
+//Variables
+$font-stack: 'Montserrat', sans-serif;
+$primary-color: #2ba6cb;
+$body-font: 'Montserrat', sans-serif;
+
+// Styles
+.button {
+    font-family: $font-stack;
+    background-color: $primary-color;
+}
+
+//Font Variables
+$montserrat: 'Montserrat', sans-serif;
+$open-sans: 'Open Sans', sans-serif;
+
+//Styles
+body {
+    font-family: $body-font;
+    font-weight: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: $open-sans;
+    font-weight: normal;
+}
+
+.button {
+    font-family: $body-font;
+    font-weight: bold;
+}
