@@ -16,7 +16,7 @@ function getHours() {
   for (i = 1; i < 13; i++) {
 
     let hour = (currentHour + i) % 24;
-    const hourButton = document.createElement("button");
+    const hourButton = document.createElement("li");
     hourButton.innerText = `${hour}:00`;
     hourBtnsDiv.appendChild(hourButton);
   }
