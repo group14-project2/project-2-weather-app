@@ -24,6 +24,22 @@ button {
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.18);
 }
 
+.hour-btns button {
+    background-color: hsl(120, 10%, 64%);
+    min-width: 300px;
+    color: #fff;
+  }
+
+.list-of-cities li {
+    color: #fff;
+    list-style-type: none;
+    margin: 5px;
+    padding: 5px;
+    border: none;
+    background: hsl(120, 10%, 64%);
+    font-family: $montserrat;
+}
+
 .searchbar {
     display: flex;
     flex-direction: row;
@@ -31,7 +47,10 @@ button {
     align-content: center;
     width: 100%;
     height: auto;
+    margin-top: 3%;
+
 }
+
 
 //Font Variables
 $montserrat: 'Montserrat', sans-serif;
@@ -61,3 +80,16 @@ h1, h2, h3, h4, h5, h6 {
     font-family: $body-font;
     font-weight: bold;
 }
+
+.hour-btns-results {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+  }
+
+  .hour-btns button {
+      margin-top: 5px;
+  }

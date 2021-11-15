@@ -49,11 +49,6 @@ button{
   min-width: 70px;
 }
 
-button:not(#rain, #night, [type='submit']){
-  background-color: darkgreen;
-  max-width: 70px;
-}
-
 .rain-highlight,
 .night-highlight{
   background-color: red;
