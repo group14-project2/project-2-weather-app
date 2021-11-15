@@ -5,6 +5,10 @@ $font-stack: 'Montserrat', sans-serif;
 $primary-color: #2ba6cb;
 $body-font: 'Montserrat', sans-serif;
 
+//Font Variables
+$montserrat: 'Montserrat', sans-serif;
+$open-sans: 'Open Sans', sans-serif;
+
 // Styles
 .buttons {
     display: flex;
@@ -52,9 +56,7 @@ button {
 }
 
 
-//Font Variables
-$montserrat: 'Montserrat', sans-serif;
-$open-sans: 'Open Sans', sans-serif;
+
 
 //Styles
 body {

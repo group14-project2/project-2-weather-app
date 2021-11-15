@@ -16,7 +16,7 @@ function getHours() {
   for (i = 1; i < 13; i++) {
 
     let hour = (currentHour + i) % 24;
-    const hourButton = document.createElement("button");
+    const hourButton = document.createElement("li");
     hourButton.innerText = `${hour}:00`;
     hourBtnsDiv.appendChild(hourButton);
   }
@@ -150,10 +150,10 @@ function displayHourlyData(twelveWeatherSubArray) {
   })
 
   // once all hourly data is displayed, check if either buttons text content have changed/ie buttons were clicked from the default 'will walk in rain/at night', and highlight appropriate data
-  if (rainBtn.innerText === "Not willing to walk in rain") {
+  if (rainBtn.innerText === "Not willing to exercise in rain") {
     addOrRemoveHighlight(rainBtn)
   }
-  if (nightBtn.innerText === "Not willing to walk at night") {
+  if (nightBtn.innerText === "Not willing to exercise at night") {
     addOrRemoveHighlight(nightBtn)
   }
 }
@@ -175,10 +175,10 @@ function addOrRemoveHighlight(button) {
 // construct new text inside the button
 function changButtonContent(btn) {
 
-  const a = "Willing to walk in rain";
-  const b = "Not willing to walk in rain";
-  const c = "Willing to walk at night";
-  const d = "Not willing to walk at night";
+  const a = "Willing to exercise in rain";
+  const b = "Not willing to exercise in rain";
+  const c = "Willing to exercise at night";
+  const d = "Not willing to exercise at night";
 
   // basically swap strings for the opposite related one 
   // sub in the string to clear up semantic meanings
