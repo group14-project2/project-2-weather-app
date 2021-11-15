@@ -116,9 +116,6 @@ const nightBtn = document.querySelector('#night');
   });
 })
 
-document.querySelectorAll('[tabindex]').forEach((element) => {
-  console.log(element);
-})
 
 // convert the array of boolean weather forecast for the next 12 hours into 12 <li> with the appropriate emojis, and attach the appropriate .rain/.night/or both class to each <li>
 function displayHourlyData(twelveWeatherSubArray) {
@@ -136,16 +133,16 @@ function displayHourlyData(twelveWeatherSubArray) {
     // [0] is precipitation data, [1] is daylight data
     if (subArray[0] === true) {
       hourItem.classList.add("rain");
-      hourItem.innerText = '☔';
+      hourItem.innerText = 'Rainy,';
     } else {
-      hourItem.innerText = '🍂';
+      hourItem.innerText = 'Dry,';
     }
 
     if (subArray[1] === false) {
       hourItem.classList.add("night");
-      hourItem.innerText = hourItem.innerText + ' 🌚';
+      hourItem.innerText = hourItem.innerText + ' Nighttime';
     } else {
-      hourItem.innerText = hourItem.innerText + ' 🌞';
+      hourItem.innerText = hourItem.innerText + ' Daylight';
     }
 
     // append the newly created weather <li>
@@ -178,10 +175,10 @@ function addOrRemoveHighlight(button) {
 // construct new text inside the button
 function changButtonContent(btn) {
 
-  const a = "☔ Willing to walk in rain";
-  const b = "🍂 Not willing to walk in rain";
-  const c = "🌚 Willing to walk at night";
-  const d = "🌞 Not willing to walk at night";
+  const a = "Willing to walk in rain";
+  const b = "Not willing to walk in rain";
+  const c = "Willing to walk at night";
+  const d = "Not willing to walk at night";
 
   // basically swap strings for the opposite related one 
   // sub in the string to clear up semantic meanings
