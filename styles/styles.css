@@ -14,7 +14,7 @@ article, aside, footer, header, nav, section {
 
 h1 {
   font-size: 2em;
-  margin: .67em 0;
+  margin: 0.67em 0;
 }
 
 figcaption, figure, main {
@@ -33,7 +33,7 @@ hr {
 }
 
 pre {
-  font-family: monospace,monospace;
+  font-family: monospace, monospace;
   font-size: 1em;
 }
 
@@ -58,7 +58,7 @@ b, strong {
 }
 
 code, kbd, samp {
-  font-family: monospace,monospace;
+  font-family: monospace, monospace;
   font-size: 1em;
 }
 
@@ -83,11 +83,11 @@ sub, sup {
 }
 
 sub {
-  bottom: -.25em;
+  bottom: -0.25em;
 }
 
 sup {
-  top: -.5em;
+  top: -0.5em;
 }
 
 audio, video {
@@ -136,7 +136,7 @@ button:-moz-focusring, [type=button]:-moz-focusring, [type=reset]:-moz-focusring
 }
 
 fieldset {
-  padding: .35em .75em .625em;
+  padding: 0.35em 0.75em 0.625em;
 }
 
 legend {
@@ -211,7 +211,7 @@ template {
   visibility: hidden;
   display: block;
   font-size: 0;
-  content: '';
+  content: "";
   clear: both;
   height: 0;
 }
@@ -340,10 +340,11 @@ button {
 .list-of-cities li {
   color: #fff;
   list-style-type: none;
-  margin: 0;
-  padding: 0;
+  margin: 5px;
+  padding: 5px;
   border: none;
   background: #9aac9a;
+  font-family: "Montserrat", sans-serif;
 }
 
 .searchbar {
@@ -386,7 +387,6 @@ header {
 
 h1, h2, h3, h4, h5, h6 {
   -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
       align-self: center;
   font-family: "Open Sans", sans-serif;
   font-weight: normal;
@@ -418,6 +418,11 @@ body {
   background-color: #c7c1c1;
 }
 
+@media (max-width: 550px) {
+  body {
+    padding: 5% 5%;
+  }
+}
 .displayNone {
   display: none !important;
 }
@@ -432,9 +437,18 @@ body {
 }
 
 li {
-  font-size: 25px;
+  font-size: 20px;
   list-style-type: none;
   border: 1px black solid;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .button-container {
@@ -476,4 +490,34 @@ p {
   display: -ms-flexbox;
   display: flex;
 }
-/*# sourceMappingURL=styles.css.map */
+
+.preferences-location-input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+fieldset {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
