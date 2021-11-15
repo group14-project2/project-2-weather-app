@@ -51,10 +51,11 @@ const getLocation = async (location) => {
 // Accuweather's Location API gives back an array of city objects that matches user input; this function displays the "city name-region-country" of each city object as a <p> for user to click on and get that city's weather forecast; each city <p> is attached with a unique 5-digit id that uniquely identifies a city to Accuweather's Forecast API 
 const renderCities = (cities) => {
   listOfCities.replaceChildren();
-  cities.forEach((city) => {
+  cities.forEach((city, index) => {
     const cityItem = document.createElement("li");
     cityItem.innerText = `${city.LocalizedName}, ${city.AdministrativeArea.LocalizedName}, ${city.Country.LocalizedName}`;
     cityItem.id = city.Key;
+    cityItem.tabIndex = index + 5;
 
     console.log(cityItem.id)
 
@@ -116,7 +117,6 @@ const nightBtn = document.querySelector('#night');
 })
 
 
-
 // convert the array of boolean weather forecast for the next 12 hours into 12 <li> with the appropriate emojis, and attach the appropriate .rain/.night/or both class to each <li>
 function displayHourlyData(twelveWeatherSubArray) {
 
@@ -125,7 +125,7 @@ function displayHourlyData(twelveWeatherSubArray) {
 
   const resultsDiv = document.querySelector('.results');
 
-  // turn subarrays, eg [true, true] (will rain, nighttime) into [☔, 🌚]
+  // turn subarrays, eg [true, true] into semantic words
   twelveWeatherSubArray.forEach((subArray) => {
 
     const hourItem = document.createElement("li");
@@ -133,16 +133,16 @@ function displayHourlyData(twelveWeatherSubArray) {
     // [0] is precipitation data, [1] is daylight data
     if (subArray[0] === true) {
       hourItem.classList.add("rain");
-      hourItem.innerText = '☔';
+      hourItem.innerText = 'Rainy,';
     } else {
-      hourItem.innerText = '🍂';
+      hourItem.innerText = 'Dry,';
     }
 
     if (subArray[1] === false) {
       hourItem.classList.add("night");
-      hourItem.innerText = hourItem.innerText + ' 🌚';
+      hourItem.innerText = hourItem.innerText + ' Nighttime';
     } else {
-      hourItem.innerText = hourItem.innerText + ' 🌞';
+      hourItem.innerText = hourItem.innerText + ' Daylight';
     }
 
     // append the newly created weather <li>
@@ -150,10 +150,10 @@ function displayHourlyData(twelveWeatherSubArray) {
   })
 
   // once all hourly data is displayed, check if either buttons text content have changed/ie buttons were clicked from the default 'will walk in rain/at night', and highlight appropriate data
-  if (rainBtn.innerText === "🍂 Not willing to walk in rain") {
+  if (rainBtn.innerText === "Not willing to walk in rain") {
     addOrRemoveHighlight(rainBtn)
   }
-  if (nightBtn.innerText === "🌞 Not willing to walk at night") {
+  if (nightBtn.innerText === "Not willing to walk at night") {
     addOrRemoveHighlight(nightBtn)
   }
 }
@@ -175,10 +175,10 @@ function addOrRemoveHighlight(button) {
 // construct new text inside the button
 function changButtonContent(btn) {
 
-  const a = "☔ Willing to walk in rain";
-  const b = "🍂 Not willing to walk in rain";
-  const c = "🌚 Willing to walk at night";
-  const d = "🌞 Not willing to walk at night";
+  const a = "Willing to walk in rain";
+  const b = "Not willing to walk in rain";
+  const c = "Willing to walk at night";
+  const d = "Not willing to walk at night";
 
   // basically swap strings for the opposite related one 
   // sub in the string to clear up semantic meanings
