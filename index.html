@@ -4,9 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Open+Sans:wght@300&display=swap" rel="stylesheet"> 
   <link rel="stylesheet" href="./sass/styles.css">
 </head>
 
@@ -20,6 +22,7 @@
       </header>
     <div class="buttons">
     <div class="button-container">
+
       <button id="rain" tabindex="1">
         Willing to walk in rain
       </button>
@@ -32,6 +35,7 @@
     </div>
 
 
+    <div class="searchbar">
     <form action="submit" class="submit-location">
       <fieldset>
         <input type="text" placeholder="location" class="input-location" tabindex="3"/>
@@ -39,19 +43,22 @@
         <p class='no-city'></p>
       </fieldset>
     </form>
-
-  <div class="available-cities">
-    <ul class="list-of-cities"></ul>
-  </div>
-
-    <div class="hour-btns-results">
-      <div class="hour-btns">
-        <!-- HOUR BUTTONS GO HERE -->
-      </div>
-      <div class="results">
-        <!-- HOURLY WEATHER DATA GO HERE -->
-      </div>
     </div>
+
+      <div class="search-results"></div>
+        <div class="available-cities">
+          <ul class="list-of-cities"></ul>
+        </div>
+      </div>
+
+        <div class="hour-btns-results">
+          <div class="hour-btns">
+            <!-- HOUR BUTTONS GO HERE -->
+          </div>
+          <div class="results">
+            <!-- HOURLY WEATHER DATA GO HERE -->
+          </div>
+        </div>
 
     <script src="./script.js"></script>
     </div>

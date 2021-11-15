@@ -1,10 +1,10 @@
-@import 'normalize';
+@import './normalize';
+@import './elements';
 
 body{
-  margin: 0 auto;
-  padding: 0 20%;
-  background-color: rgb(43, 40, 40);
-  border: 1px solid red;
+  // margin: 0 auto;
+  // padding: 0 20%;
+  background-color: #c7c1c1;
 }
 
 .displayNone {
@@ -34,11 +34,6 @@ li{
 button{
   font-size: 20px;
   min-width: 70px;
-}
-
-button:not(#rain, #night, [type='submit']){
-  background-color: darkgreen;
-  max-width: 70px;
 }
 
 .rain-highlight,

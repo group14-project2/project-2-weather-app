@@ -1,7 +1,3 @@
-* {
-  border: 1px solid red;
-}
-
 html {
   line-height: 1.15;
   -ms-text-size-adjust: 100%;
@@ -16,18 +12,9 @@ article, aside, footer, header, nav, section {
   display: block;
 }
 
-header {
-  text-align: center;
-}
-
 h1 {
   font-size: 2em;
   margin: .67em 0;
-  text-transform: uppercase;
-}
-
-h2 {
-  text-transform: uppercase;
 }
 
 figcaption, figure, main {
@@ -246,16 +233,23 @@ template {
 body {
   margin: 0 auto;
   padding: 0 20%;
-  background-color: #fff;
-  border: 1px solid red;
+  background-color: #2b2828;
 }
 
 .displayNone {
   display: none !important;
 }
 
-.clickable {
+.list-of-cities {
+  list-style-type: none;
+}
+
+.list-of-cities li {
   cursor: pointer;
+}
+
+.no-city {
+  color: white;
 }
 
 .clickable:hover,
@@ -276,11 +270,6 @@ li {
 button {
   font-size: 20px;
   min-width: 70px;
-}
-
-button:not(#rain, #night, [type='submit']) {
-  background-color: darkgreen;
-  max-width: 70px;
 }
 
 .rain-highlight,
@@ -314,41 +303,177 @@ p {
   display: flex;
 }
 
-.wrapper {
-  width: 1170px;
-  margin: 0 auto;
-  height: 100vh;
-  padding-left: 16px;
-  padding-right: 16px;
-}
-
-.app {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: lightpink;
-}
-
 .buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-content: center;
-    height: 200px;
-    width: 500px;
-  }
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  font-family: "Montserrat", sans-serif;
+  background-color: transparent;
+}
 
-  .button-container {
-    height: 50%;
-    width: 50%;
-    display: flex;
-    justify-content: space-around;
-    align-self: center;
-  }
+.button-container {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
 
-  #rain #night {
-    width: 80%;
-    height: 100%;
-  }
+button {
+  border-radius: 8px;
+  -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.18);
+          box-shadow: 0 3px 5px rgba(0, 0, 0, 0.18);
+}
+
+.hour-btns button {
+  background-color: #9aac9a;
+  min-width: 300px;
+  color: #fff;
+}
+
+.list-of-cities li {
+  color: #fff;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: #9aac9a;
+}
+
+.searchbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  width: 100%;
+  height: auto;
+  margin-top: 3%;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  font-weight: normal;
+}
+
+header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: normal;
+}
+
+.button {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+}
+
+.hour-btns-results {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #fff;
+}
+
+.hour-btns button {
+  margin-top: 5px;
+}
+
+body {
+  background-color: #c7c1c1;
+}
+
+.displayNone {
+  display: none !important;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover,
+.clickable:focus {
+  text-decoration: underline;
+}
+
+li {
+  font-size: 25px;
+  list-style-type: none;
+  border: 1px black solid;
+}
+
+.button-container {
+  display: inline-block;
+}
+
+button {
+  font-size: 20px;
+  min-width: 70px;
+}
+
+.rain-highlight,
+.night-highlight {
+  background-color: red;
+}
+
+p {
+  margin: 5px 0;
+}
+
+.hour-btns,
+.results {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.hour-btns > *,
+.results > * {
+  min-height: 50px;
+}
+
+.hour-btns-results {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
 /*# sourceMappingURL=styles.css.map */
