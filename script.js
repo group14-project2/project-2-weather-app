@@ -125,7 +125,7 @@ function displayHourlyData(twelveWeatherSubArray) {
 
   const resultsDiv = document.querySelector('.results');
 
-  // turn subarrays, eg [true, true] (will rain, nighttime) into [☔, 🌚]
+  // turn subarrays, eg [true, true] into semantic words
   twelveWeatherSubArray.forEach((subArray) => {
 
     const hourItem = document.createElement("li");
@@ -150,10 +150,10 @@ function displayHourlyData(twelveWeatherSubArray) {
   })
 
   // once all hourly data is displayed, check if either buttons text content have changed/ie buttons were clicked from the default 'will walk in rain/at night', and highlight appropriate data
-  if (rainBtn.innerText === "🍂 Not willing to walk in rain") {
+  if (rainBtn.innerText === "Not willing to walk in rain") {
     addOrRemoveHighlight(rainBtn)
   }
-  if (nightBtn.innerText === "🌞 Not willing to walk at night") {
+  if (nightBtn.innerText === "Not willing to walk at night") {
     addOrRemoveHighlight(nightBtn)
   }
 }
